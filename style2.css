@@ -1,0 +1,231 @@
+/* Add this at the top of your CSS file */
+@font-face {
+  font-family: 'nazif3';
+  src: local('nazif3'),
+       url('nazi8.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+/* Base styles */
+:root {
+  --neon-color: #00ff66;
+  --circle-size: 30px;
+  --gradient-start: rgba(22, 94, 43, 1);
+  --gradient-end: rgba(0, 0, 0, 1);
+}
+
+/* Reset */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent scrollbars from appearing */
+}
+
+body {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('bg.jpg') center center/cover no-repeat;
+  /* Add a dark overlay to ensure text remains readable */
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+}
+
+/* Logo container styles */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem; /* Equal gap between all elements */
+  transform: translateY(0vh); /* Changed from -8vh to 0vh to center vertically */
+}
+
+/* Logo styles */
+.logo {
+  font-family: 'nazif3' !important;
+  font-size: 18rem;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  will-change: filter;
+  opacity: 1; /* Changed from 0 to 1 to make it always visible */
+  letter-spacing: 8px;
+  margin: 0;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+}
+
+/* Add styles for the background logo */
+.logo::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: #1a1a1a; /* Darker grey for the background text */
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Update front logo letter styles */
+.logo-letter {
+  color: #333; /* Default grey color */
+  transition: all 0.3s ease; /* Added 'all' to include color transition */
+  cursor: default;
+}
+
+/* Remove the neon effect from the main logo class */
+.neon {
+  --shadow-color: var(--neon-color);
+}
+
+/* Apply glow effect and color change on hover of individual letters */
+.logo-letter:hover {
+  color: var(--neon-color); /* Change color to neon on hover */
+  text-shadow:
+    0 0 7px var(--neon-color),
+    0 0 10px var(--neon-color),
+    0 0 21px var(--neon-color),
+    0 0 42px var(--neon-color),
+    0 0 82px var(--neon-color),
+    0 0 92px var(--neon-color),
+    0 0 102px var(--neon-color),
+    0 0 151px var(--neon-color);
+}
+
+/* Cursor follower */
+.circle {
+  height: var(--circle-size);
+  width: var(--circle-size);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform-origin: center center;
+  transition: background-color 0.3s ease;
+  mix-blend-mode: screen;
+  filter: blur(0.4px); /* Slightly increased blur for smoother appearance */
+  opacity: 0.85; /* Base opacity adjusted for better layering */
+}
+
+/* Subtitle styles */
+.subtitle {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.50rem;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+  letter-spacing: 2px;
+  
+}
+
+/* Button styles */
+.button {
+  border: none;
+  outline: none;
+  background-color: rgb(0, 70, 3);
+  width: 180px;
+  height: 50px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: 300;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  width: 106%;
+  height: 120%;
+  z-index: -1;
+  border-radius: 50px;
+  transition: all 0.3s;
+  opacity: 0; /* Hide the border by default */
+}
+
+.button:hover::before {
+  opacity: 1; /* Show the border on hover */
+}
+
+.gradient-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 106%;
+  height: 115%;
+  overflow: hidden;
+  border-radius: 50px;
+  z-index: -2;
+  filter: blur(10px);
+  transition: all 0.3s;
+  opacity: 0; /* Hide the gradient by default */
+}
+
+.button:hover .gradient-container {
+  transform: translate(-50%, -50%) scale(0.98);
+  filter: blur(5px);
+  opacity: 1; /* Show the gradient on hover */
+}
+
+.gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  transition: all 0.3s;
+  background-image: linear-gradient(
+    90deg,
+    hsl(60, 81%, 64%),  /* Yellow */
+    hsl(120, 81%, 64%), /* Green */
+    hsl(240, 81%, 64%), /* Blue */
+    hsl(280, 81%, 64%)  /* Purple */
+  );
+  animation: rotate 2s linear infinite;
+  filter: blur(10px);
+}
+
+.label {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50px;
+  background: none;
+  letter-spacing: 1px;
+}
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
