@@ -13,7 +13,8 @@ const CIRCLE_CONFIG = {
 const state = {
   coords: { x: 0, y: 0 },
   circles: null,
-  animationFrame: null
+  animationFrame: null,
+  isTouching: false
 };
 
 function createCircles() {
@@ -43,10 +44,34 @@ function initializeCircles() {
   });
 }
 
+// Handle both mouse and touch events
+function updateCoordinates(x, y) {
+  state.coords.x = x;
+  state.coords.y = y;
+}
+
 function handleMouseMove(e) {
-  // Get the actual mouse position
-  state.coords.x = e.clientX;
-  state.coords.y = e.clientY;
+  updateCoordinates(e.clientX, e.clientY);
+}
+
+function handleTouchMove(e) {
+  e.preventDefault(); // Prevent scrolling while touching
+  if (e.touches.length > 0) {
+    const touch = e.touches[0];
+    updateCoordinates(touch.clientX, touch.clientY);
+  }
+}
+
+function handleTouchStart(e) {
+  state.isTouching = true;
+  if (e.touches.length > 0) {
+    const touch = e.touches[0];
+    updateCoordinates(touch.clientX, touch.clientY);
+  }
+}
+
+function handleTouchEnd() {
+  state.isTouching = false;
 }
 
 function isNearLogo(x, y) {
@@ -98,15 +123,14 @@ function cleanup() {
 function wrapLogoLetters() {
   const logo = document.querySelector('.logo');
   const text = logo.textContent;
-  // Set the data-text attribute for the background text
-  logo.setAttribute('data-text', text);
   logo.textContent = '';
   
-  // Wrap each letter in a span
+  // Wrap each letter in a span with data-letter attribute
   text.split('').forEach(letter => {
     const span = document.createElement('span');
     span.className = 'logo-letter';
     span.textContent = letter;
+    span.setAttribute('data-letter', letter); // Add data-letter attribute
     logo.appendChild(span);
   });
 }
@@ -115,8 +139,13 @@ function init() {
   wrapLogoLetters();
   initializeCircles();
   
-  // Add mouse move listener
+  // Add mouse event listeners
   window.addEventListener("mousemove", handleMouseMove, { passive: true });
+  
+  // Add touch event listeners
+  window.addEventListener("touchstart", handleTouchStart, { passive: false });
+  window.addEventListener("touchmove", handleTouchMove, { passive: false });
+  window.addEventListener("touchend", handleTouchEnd, { passive: true });
   
   // Start animation
   animateCircles();

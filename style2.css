@@ -33,6 +33,8 @@ body {
   padding: 0;
   height: 100%;
   overflow: hidden; /* Prevent scrollbars from appearing */
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -51,41 +53,55 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem; /* Equal gap between all elements */
-  transform: translateY(0vh); /* Changed from -8vh to 0vh to center vertically */
+  gap: clamp(1rem, 4vw, 4rem); /* Responsive gap */
+  transform: translateY(0vh);
+  width: 100%; /* Full width */
+  padding: 1rem; /* Add padding for smaller screens */
 }
 
 /* Logo styles */
 .logo {
   font-family: 'younuzwebcastlefill' !important;
-  font-size: 18rem;
+  font-size: clamp(6rem, 20vw, 24rem); /* Increased from 4rem, 15vw, 18rem */
   font-weight: 400;
   position: relative;
   z-index: 1;
   will-change: filter;
-  opacity: 1; /* Changed from 0 to 1 to make it always visible */
-  letter-spacing: 18px;
+  opacity: 1;
+  letter-spacing: clamp(2px, 1vw, 10px);
   margin: 0;
   text-transform: uppercase;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 1rem;
 }
 
-
-/* Update front logo letter styles */
+/* Update logo-letter styles */
 .logo-letter {
   color: #f8f8f842;
   cursor: default;
   position: relative;
   display: inline-block;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  transition: opacity 0.3s ease;
 }
 
-/* Add new overlay style for each letter */
+/* Update the overlay style */
 .logo-letter::before {
   content: attr(data-letter);
   position: absolute;
   left: 0;
   top: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   font-family: 'younuzwebcastlestrokefill' !important;
@@ -98,12 +114,17 @@ body {
     0 0 21px var(--neon-color),
     0 0 42px var(--neon-color),
     0 0 82px var(--neon-color),
-    0 0 92px var(--neon-color),
-    0 0 0px var(--neon-color),
-    0 0 0px var(--neon-color);
+    0 0 92px var(--neon-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Show the glowing version on hover */
+/* Update hover styles */
+.logo-letter:hover {
+  color: transparent; /* Hide the original letter */
+}
+
 .logo-letter:hover::before {
   opacity: 1;
 }
@@ -111,21 +132,6 @@ body {
 /* Remove the neon effect from the main logo class */
 .neon {
   --shadow-color: var(--neon-color);
-}
-
-/* Apply font change, color change and glow effect on hover */
-.logo-letter:hover {
-  font-family: 'younuzwebcastlestrokefill' !important; 
-  color: var(--neon-color);
-  text-shadow:
-    0 0 0px var(--neon-color),
-    0 0 0px var(--neon-color),
-    0 0 01px var(--neon-color),
-    0 0 22px var(--neon-color),
-    0 0 62px var(--neon-color),
-    0 0 72px var(--neon-color),
-    0 0 92px var(--neon-color),
-    0 0 0px var(--neon-color);
 }
 
 /* Cursor follower */
@@ -149,12 +155,12 @@ body {
 .subtitle {
   color: white;
   font-family: 'Poppins', sans-serif;
-  font-size: 2.50rem;
+  font-size: clamp(1.25rem, 3vw, 2.5rem); /* Responsive font size */
   font-weight: 500;
   margin: 0;
   opacity: 0.9;
-  letter-spacing: 2px;
-  
+  letter-spacing: clamp(1px, 0.2vw, 2px); /* Responsive letter spacing */
+  padding: 0 1rem;
 }
 
 /* Button styles */
@@ -162,9 +168,9 @@ body {
   border: none;
   outline: none;
   background-color: rgb(0, 70, 3);
-  width: 180px;
-  height: 50px;
-  font-size: 14px;
+  width: clamp(140px, 30vw, 180px); /* Responsive width */
+  height: clamp(40px, 8vw, 50px); /* Responsive height */
+  font-size: clamp(12px, 2vw, 14px); /* Responsive font size */
   color: #fff;
   font-weight: 300;
   font-family: 'Poppins', sans-serif;
@@ -175,6 +181,8 @@ body {
   cursor: pointer;
   position: relative;
   transition: all 0.3s;
+  min-width: max-content; /* Ensure button width fits content */
+  padding: 0 1.5rem; /* Add horizontal padding */
 }
 
 .button::before {
@@ -242,16 +250,72 @@ body {
   width: 100%;
   height: 100%;
   text-align: center;
-  line-height: 50px;
+  line-height: normal; /* Change from fixed 50px to normal */
   border-radius: 50px;
   background: none;
   letter-spacing: 1px;
+  display: flex; /* Add flex display */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  white-space: nowrap; /* Prevent text wrapping */
 }
+
 @keyframes rotate {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  /* Adjust wrapper padding for mobile */
+  .wrapper {
+    padding: 1rem;
+  }
+
+  /* Adjust circle size for mobile */
+  :root {
+    --circle-size: 20px; /* Smaller circles on mobile */
+  }
+
+  /* Reduce number of circles on mobile */
+  .circle {
+    opacity: 0.6; /* Slightly reduce opacity on mobile */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Further adjustments for very small screens */
+  .header-container {
+    gap: 2rem; /* Reduce gap on very small screens */
+  }
+
+  :root {
+    --circle-size: 15px; /* Even smaller circles on very small screens */
+  }
+
+  /* Ensure text doesn't overflow */
+  .logo {
+    font-size: clamp(4rem, 15vw, 6rem); /* Increased from 3rem, 12vw, 4rem */
+    letter-spacing: clamp(1px, 0.5vw, 2px);
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+
+  /* Adjust button size for very small screens */
+  .button {
+    width: auto; /* Let button width adjust to content */
+    min-width: 120px; /* Minimum width */
+    height: clamp(35px, 7vw, 40px);
+    padding: 0 1rem; /* Slightly reduced padding on mobile */
+  }
+
+  .label {
+    font-size: 12px; /* Ensure readable text size on mobile */
   }
 }
