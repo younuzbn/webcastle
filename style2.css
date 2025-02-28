@@ -21,7 +21,7 @@
 /* Base styles */
 :root {
   --neon-color: #00ff66;
-  --circle-size: 30px;
+  --circle-size: 10px;
   --gradient-start: rgba(22, 94, 43, 1);
   --gradient-end: rgba(0, 0, 0, 1);
 }
@@ -46,6 +46,7 @@ body {
   /* Add a dark overlay to ensure text remains readable */
   background-color: rgba(0, 0, 0, 0.5);
   background-blend-mode: overlay;
+  cursor: none; /* Hide the default cursor */
 }
 
 /* Base container styles */
@@ -126,10 +127,10 @@ body {
   text-shadow:
     0 0 7px var(--neon-color),
     0 0 10px var(--neon-color),
-    0 0 21px var(--neon-color),
-    0 0 42px var(--neon-color),
-    0 0 82px var(--neon-color),
-    0 0 92px var(--neon-color);
+    0 0 0px var(--neon-color),
+    0 0 0px var(--neon-color),
+    0 0 0px var(--neon-color),
+    0 0 0px var(--neon-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,8 +163,8 @@ body {
   transform-origin: center center;
   transition: background-color 0.3s ease;
   mix-blend-mode: screen;
-  filter: blur(0.4px); /* Slightly increased blur for smoother appearance */
-  opacity: 0.85; /* Base opacity adjusted for better layering */
+  filter: blur(0.2px); /* Decreased blur for smaller circles */
+  opacity: 0.75; /* Slightly reduced opacity for better visual */
 }
 
 /* Subtitle styles */
@@ -300,7 +301,7 @@ body {
 
   /* Adjust circle size for mobile */
   :root {
-    --circle-size: 20px; /* Smaller circles on mobile */
+    --circle-size: 7px; /* Decreased from 10px to 7px */
   }
 
   /* Reduce number of circles on mobile */
@@ -350,6 +351,11 @@ body {
   .label {
     font-size: 12px; /* Ensure readable text size on mobile */
   }
+
+  /* Adjust circle size for very small screens */
+  :root {
+    --circle-size: 5px; /* Decreased from 8px to 5px */
+  }
 }
 
 /* Add this to your existing CSS */
@@ -359,4 +365,16 @@ body {
 
 .logo-letter.glowing::before {
   opacity: 1;
+}
+
+/* Hide cursor on clickable elements too */
+button, 
+a, 
+.logo-letter {
+  cursor: none;
+}
+
+/* Ensure cursor stays hidden when hovering any element */
+* {
+  cursor: none;
 }

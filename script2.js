@@ -5,9 +5,9 @@ const CIRCLE_CONFIG = {
     "#00cc44", "#00e64d", "#00ff55", "#1aff66", "#33ff77",
     "#4dff88", "#66ff99"
   ],
-  smoothingFactor: 0.25, // Slightly reduced for smoother motion with more circles
-  size: 20, // Smaller circles for better visual with increased count
-  count: 70 // Doubled the circle count
+  smoothingFactor: 0.1, // Slightly reduced for smoother motion with smaller circles
+  size: 10, // Decreased from 15 to 10
+  count: 80 // Reduced circle count for better performance
 };
 
 const state = {
