@@ -59,6 +59,22 @@ function handleTouchMove(e) {
   if (e.touches.length > 0) {
     const touch = e.touches[0];
     updateCoordinates(touch.clientX, touch.clientY);
+    
+    // Check for letters under the touch point
+    const letters = document.querySelectorAll('.logo-letter');
+    letters.forEach(letter => {
+      const rect = letter.getBoundingClientRect();
+      if (touch.clientX >= rect.left && 
+          touch.clientX <= rect.right && 
+          touch.clientY >= rect.top && 
+          touch.clientY <= rect.bottom) {
+        // Add glowing class instead of directly setting styles
+        letter.classList.add('glowing');
+      } else {
+        // Remove glowing class
+        letter.classList.remove('glowing');
+      }
+    });
   }
 }
 
@@ -72,6 +88,11 @@ function handleTouchStart(e) {
 
 function handleTouchEnd() {
   state.isTouching = false;
+  // Remove glowing class from all letters when touch ends
+  const letters = document.querySelectorAll('.logo-letter');
+  letters.forEach(letter => {
+    letter.classList.remove('glowing');
+  });
 }
 
 function isNearLogo(x, y) {
