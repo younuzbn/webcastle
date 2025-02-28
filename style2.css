@@ -1,8 +1,18 @@
 /* Add this at the top of your CSS file */
 @font-face {
-  font-family: 'nazif3';
-  src: local('nazif3'),
-       url('nazi8.ttf') format('truetype');
+  font-family: 'younuzwebcastlefill';
+  src: local('younuzwebcastlefill'),
+       url('younuzwebcastlefill.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+/* Add this after the first @font-face declaration */
+@font-face {
+  font-family: 'younuzwebcastlestrokefill';
+  src: local('younuzwebcastlestrokefill'),
+       url('younuzwebcastlestrokefill.ttf') format('truetype');
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -47,50 +57,41 @@ body {
 
 /* Logo styles */
 .logo {
-  font-family: 'nazif3' !important;
+  font-family: 'younuzwebcastlefill' !important;
   font-size: 18rem;
   font-weight: 400;
   position: relative;
   z-index: 1;
   will-change: filter;
   opacity: 1; /* Changed from 0 to 1 to make it always visible */
-  letter-spacing: 8px;
+  letter-spacing: 18px;
   margin: 0;
   text-transform: uppercase;
   display: flex;
   justify-content: center;
 }
 
-/* Add styles for the background logo */
-.logo::before {
-  content: attr(data-text);
+
+/* Update front logo letter styles */
+.logo-letter {
+  color: #f8f8f842;
+  cursor: default;
+  position: relative;
+  display: inline-block;
+}
+
+/* Add new overlay style for each letter */
+.logo-letter::before {
+  content: attr(data-letter);
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  color: #1a1a1a; /* Darker grey for the background text */
-  z-index: -1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Update front logo letter styles */
-.logo-letter {
-  color: #333; /* Default grey color */
-  transition: all 0.3s ease; /* Added 'all' to include color transition */
-  cursor: default;
-}
-
-/* Remove the neon effect from the main logo class */
-.neon {
-  --shadow-color: var(--neon-color);
-}
-
-/* Apply glow effect and color change on hover of individual letters */
-.logo-letter:hover {
-  color: var(--neon-color); /* Change color to neon on hover */
+  font-family: 'younuzwebcastlestrokefill' !important;
+  color: var(--neon-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
   text-shadow:
     0 0 7px var(--neon-color),
     0 0 10px var(--neon-color),
@@ -98,8 +99,33 @@ body {
     0 0 42px var(--neon-color),
     0 0 82px var(--neon-color),
     0 0 92px var(--neon-color),
-    0 0 102px var(--neon-color),
-    0 0 151px var(--neon-color);
+    0 0 0px var(--neon-color),
+    0 0 0px var(--neon-color);
+}
+
+/* Show the glowing version on hover */
+.logo-letter:hover::before {
+  opacity: 1;
+}
+
+/* Remove the neon effect from the main logo class */
+.neon {
+  --shadow-color: var(--neon-color);
+}
+
+/* Apply font change, color change and glow effect on hover */
+.logo-letter:hover {
+  font-family: 'younuzwebcastlestrokefill' !important; 
+  color: var(--neon-color);
+  text-shadow:
+    0 0 0px var(--neon-color),
+    0 0 0px var(--neon-color),
+    0 0 01px var(--neon-color),
+    0 0 22px var(--neon-color),
+    0 0 62px var(--neon-color),
+    0 0 72px var(--neon-color),
+    0 0 92px var(--neon-color),
+    0 0 0px var(--neon-color);
 }
 
 /* Cursor follower */
@@ -159,8 +185,8 @@ body {
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  width: 106%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   border-radius: 50px;
   transition: all 0.3s;
@@ -176,8 +202,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 106%;
-  height: 115%;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border-radius: 50px;
   z-index: -2;
